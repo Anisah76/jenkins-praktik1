@@ -8,7 +8,7 @@ pipeline {
     environment {
         VENV = 'venv'
     }
-    
+
     stages {
         stage('Setup Environment & Install Dependencies') {
             steps {
@@ -20,6 +20,7 @@ pipeline {
                 '''
             }
         }
+
         stage('Run Tests') {
             steps {
                 sh '''
@@ -28,6 +29,7 @@ pipeline {
                 '''
             }
         }
+
         stage('Deploy') {
             when {
                 anyOf {
@@ -45,26 +47,26 @@ pipeline {
         success {
             script {
                 def payload = [
-                    content: "✅ BUILD SUCCESS on `${env.BRANCH_NAME}`\nURL: ${env.BUILD_URL}"
+                    content: "✅ Build SUCCESS on `${env.BRANCH_NAME}`\nURL: ${env.BUILD_URL}"
                 ]
                 httpRequest(
                     httpMode: 'POST',
                     contentType: 'APPLICATION_JSON',
                     requestBody: groovy.json.JsonOutput.toJson(payload),
-                    url: 'https://discord.com/api/webhooks/1369623185414426736/UdlEE3_lezXz5WFqhqW4gZVHs0eAn-WyTqrFFqiYIvfq6c-PZ30riToeoGrlZa50_Nn4'
+                    url: 'https://discord.com/api/webhooks/1368300558699466824/da5JH5oV5gFL3vC1kQTSvTHZ0J5-tIkDiHQR1eWKe66128KBl4Vw2khxqxnHUkMqAQC-'
                 )
             }
         }
         failure {
             script {
                 def payload = [
-                    content: "❌ BUILD FAILED on `${env.BRANCH_NAME}`\nURL: ${env.BUILD_URL}"
+                    content: "❌ Build FAILED on `${env.BRANCH_NAME}`\nURL: ${env.BUILD_URL}"
                 ]
                 httpRequest(
                     httpMode: 'POST',
                     contentType: 'APPLICATION_JSON',
                     requestBody: groovy.json.JsonOutput.toJson(payload),
-                    url: 'https://discord.com/api/webhooks/1369623185414426736/UdlEE3_lezXz5WFqhqW4gZVHs0eAn-WyTqrFFqiYIvfq6c-PZ30riToeoGrlZa50_Nn4'
+                    url: 'https://discord.com/api/webhooks/1368300558699466824/da5JH5oV5gFL3vC1kQTSvTHZ0J5-tIkDiHQR1eWKe66128KBl4Vw2khxqxnHUkMqAQC-'
                 )
             }
         }
